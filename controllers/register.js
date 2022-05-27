@@ -1,8 +1,12 @@
+const { json } = require("express");
 
 
 
 const handleRegister = (knex, bcrypt) => (req, res) => {
     const { name, email, password } = req.body;
+    if (!email || !name || !password) {
+        return res.status(400).json('incorrect submission')
+    }
     const hash = bcrypt.hashSync(password)
     knex.transaction(trx => {
         trx.insert({

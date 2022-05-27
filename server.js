@@ -7,6 +7,8 @@ const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
 
+
+
 const knex = require('knex')({
     client: 'pg',
     connection: {
@@ -37,9 +39,16 @@ app.get('/profile/:id', (req, res) => { profile.handleProfile(req, res, knex) })
 
 app.put('/image', (req, res) => { image.handleImage(req, res, knex) })
 
-app.listen(3000, () => {
-    console.log('app is running on port 3000')
+app.post('/imageurl', (req, res) => { image.handleApiCall(req, res) })
+
+
+
+const PORT = process.env.PORT
+
+app.listen(PORT, () => {
+    console.log(`app is running on port ${PORT}`)
 })
+// console.log(process.env)
 
 //  res with this is woprking
 //  signin -- > post req and res with success or fail
